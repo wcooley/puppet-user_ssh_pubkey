@@ -1,0 +1,19 @@
+# Ignore fixtures/modules & manifests directories
+/spec/fixtures/modules
+/spec/fixtures/manifests
+
+## MAC OS
+.DS_Store
+
+## TEXTMATE
+*.tmproj
+tmtags
+
+## EMACS
+*~
+\#*
+.\#*
+
+## VIM
+*.swp
+tags

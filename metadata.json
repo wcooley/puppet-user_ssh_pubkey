@@ -1,0 +1,20 @@
+{
+  "author": "Wil Cooley <wcooley(at)nakedape.cc>",
+  "dependencies": [],
+  "description": "Collect users' SSH public keys and make available as Facts",
+  "issues_url": "https://github.com/wcooley/puppet-user_ssh_pubkey/issues",
+  "license": "Apache 2.0",
+  "name": "wcooley-user_ssh_pubkey",
+  "operatingsystem_support": [],
+  "project_page": "https://github.com/wcooley/puppet-user_ssh_pubkey",
+  "requirements": [],
+  "source": "git://github.com/wcooley/puppet-user_ssh_pubkey",
+  "summary": "Collect users' SSH public keys and make available as Facts",
+  "tags": [
+    'ssh',
+    'ssh_authorized_key',
+    'fact',
+    'facter'
+  ],
+  "version": "0.1.0"
+}
