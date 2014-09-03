@@ -13,36 +13,46 @@
 require 'etc'
 require 'facter/util/file_read'
 
-users_fact = Facter.value('user_ssh_pubkey')
-users = users_fact ? users_fact.split(',') : []
+module Facter::UserSshPubkey
 
-users.each do |username|
-  Facter.debug("Looking for SSH keys for user '#{username}'")
-  user= Etc.getpwnam(username)
-  sshdir = File.join(user.dir, '.ssh')
+  def self.add_facts_for_user(username)
+    Facter.debug("Looking for SSH keys for user '#{username}'")
+    user = Etc.getpwnam(username)
+    sshdir = File.join(user.dir, '.ssh')
 
-  [ 'rsa', 'dsa' ].each do |keytype|
-    pubfile = "id_#{keytype}.pub"
-    pubpath = File.join(sshdir, pubfile)
+    [ 'rsa', 'dsa' ].each do |keytype|
+      pubfile = "id_#{keytype}.pub"
+      pubpath = File.join(sshdir, pubfile)
 
-    if FileTest.exists?(pubpath)
-      Facter.debug("Found '#{pubpath}' for user '#{username}'")
-      ktype, key, comment = Facter::Util::FileRead.read(pubpath).chomp.split
-      fact_base = "#{username}_ssh#{keytype}key"
+      if FileTest.exists?(pubpath)
+        Facter.debug("Found '#{pubpath}' for user '#{username}'")
+        ktype, key, comment = Facter::Util::FileRead.read(pubpath).chomp.split
+        fact_base = "#{username}_ssh#{keytype}key"
 
-      Facter.add(fact_base) do
-        setcode { key }
+        Facter.add(fact_base) do
+          Facter.debug("Setting '#{fact_base}' to '#{key}'")
+          setcode { key }
+        end
+
+        Facter.add("#{fact_base}_comment") do
+          setcode { comment }
+        end
+
+        Facter.add("#{fact_base}_type") do
+          setcode { ktype }
+        end
+      else
+        Facter.debug("Did not find '#{pubpath}' for user '#{username}'")
       end
-
-      Facter.add("#{fact_base}_comment") do
-        setcode { comment }
-      end
-
-      Facter.add("#{fact_base}_type") do
-        setcode { ktype }
-      end
-    else
-      Facter.debug("Did not find '#{pubpath}' for user '#{username}'")
     end
   end
+
+  def self.add_facts
+    users_fact = Facter.value('user_ssh_pubkey')
+    Facter.debug("'users_fact' is '#{users_fact}'")
+    users = users_fact ? users_fact.split(',') : []
+
+    users.each { |user| Facter::UserSshPubkey.add_facts_for_user(user) }
+  end
 end
+Facter::UserSshPubkey.add_facts
