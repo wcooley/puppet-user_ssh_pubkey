@@ -1,16 +1,29 @@
-Puppet Module: user\_ssh\_pubkey
+Facter facts: user\_ssh\_pubkey
 ================================
 
-Collect users' SSH public keys and make available as facts, with the name
-formatted as `<username>\_sshrsakey` or `<username>\_sshdsakey`. These facts
-can then be collected as exported resources to populate `ssh_authorized_keys`
+Collect users' SSH public keys and make available as facts. These facts
+can then be collected as exported resources to populate `ssh_authorized_key`
 resources.
+
+Facts with the following formats are created, which correspond with the
+parameters for the `ssh_authorized_key` type:
+
+* `<username>_ssh(rsa|dsa)key`
+* `<username>_ssh(rsa|dsa)key_comment`
+* `<username>_ssh(rsa|dsa)key_type`
+
+The list of users whose public keys are to be collected as facts is configured
+by the `user_ssh_pubkey` fact, which can be set using external facts. For
+example:
+
+    $ cat /etc/facter/facts.d/user_ssh_pubkey.yaml
+    ---
+    user_ssh_pubkey: jensenb,alice,bob
 
 License
 -------
 
 Apache 2.0
-
 
 Contact
 -------
@@ -20,5 +33,5 @@ Wil Cooley <wcooley(at)nakedape.cc>
 Support
 -------
 
-Please log tickets and issues at our [Projects
-site](https://github.com/wcooley/puppet-user_ssh_pubkey/issues)
+Please log tickets and issues at our [Github
+issues](https://github.com/wcooley/puppet-user_ssh_pubkey/issues).
