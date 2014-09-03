@@ -34,4 +34,4 @@ Support
 -------
 
 Please log tickets and issues at our [Github
-issues](https://github.com/wcooley/puppet-user_ssh_pubkey/issues).
+issues](https://github.com/wcooley/facter-user_ssh_pubkey/issues).
