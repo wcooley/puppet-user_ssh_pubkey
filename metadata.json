@@ -11,10 +11,10 @@
   "source": "git://github.com/wcooley/facter-user_ssh_pubkey",
   "summary": "Collect users' SSH public keys and make available as Facts",
   "tags": [
-    'ssh',
-    'ssh_authorized_key',
-    'fact',
-    'facter'
+    "ssh",
+    "ssh_authorized_key",
+    "fact",
+    "facter"
   ],
   "version": "0.1.0"
 }
