@@ -1,6 +1,9 @@
 Facter facts: user\_ssh\_pubkey
 ================================
 
+[![Build
+Status](https://travis-ci.org/wcooley/facter-user_ssh_pubkey.svg?branch=master)](https://travis-ci.org/wcooley/facter-user_ssh_pubkey)
+
 Collect users' SSH public keys and make available as facts. These facts
 can then be collected as exported resources to populate `ssh_authorized_key`
 resources.
