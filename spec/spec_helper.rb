@@ -9,7 +9,12 @@ RSpec.configure do |config|
   config.before(:all) do
     # Without this, Facter finds the user_ssh_pubkey set in my
     # ~/.facter/facts.d/
-    Facter::Util::Config.external_facts_dirs = []
+    if Facter::Util::Config.respond_to? :external_facts_dirs=
+      Facter::Util::Config.external_facts_dirs = []
+    else
+      # rspec 2.99 does not like this but it is needed for Facter 1.7
+      Facter::Util::Config.stub(:external_facts_dirs).and_return([])
+    end
   end
 
   config.before(:each) do
