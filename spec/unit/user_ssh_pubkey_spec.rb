@@ -8,12 +8,12 @@ def mock_pubkeys_for_user(username)
   rsa_file = "#{user_struct.dir}/.ssh/id_rsa.pub"
   dsa_file = "#{user_struct.dir}/.ssh/id_dsa.pub"
 
-  Etc.stub(:getpwnam).with(username).and_return(user_struct)
-  FileTest.stub(:exists?).with(rsa_file).and_return(true)
-  FileTest.stub(:exists?).with(dsa_file).and_return(false)
+  Etc.stubs(:getpwnam).with(username).returns(user_struct)
+  FileTest.stubs(:exists?).with(rsa_file).returns(true)
+  FileTest.stubs(:exists?).with(dsa_file).returns(false)
 
-  Facter::Util::FileRead.stub(:read).with(rsa_file) \
-    .and_return("ssh-rsa #{username}_xxxlongkeyherexxx #{username}@zeus")
+  Facter::Util::FileRead.stubs(:read).with(rsa_file) \
+    .returns("ssh-rsa #{username}_xxxlongkeyherexxx #{username}@zeus")
 end
 
 def load_fact(fact)
@@ -49,10 +49,10 @@ describe 'Facter::Util::Fact' do
 
     it 'does nothing without pre-existing fact user_ssh_pubkey' do
 
-      Facter.stub(:value).with('user_ssh_pubkey').and_return(nil)
+      Facter.stubs(:value).with('user_ssh_pubkey').returns(nil)
       # Facter will generate a warning that no facts are loaded, which is
       # actually what we want.
-      Facter.should_receive(:warnonce).with(/^No facts loaded/).once
+      Facter.expects(:warnonce).with { |p| p =~ /^No facts loaded/ }
 
       Facter::UserSshPubkey.add_facts
 
@@ -61,7 +61,7 @@ describe 'Facter::Util::Fact' do
 
     it 'looks up SSH keys for a single user from the user_ssh_pubkey fact' do
 
-      Facter.stub(:value).with('user_ssh_pubkey').and_return('jensenb')
+      Facter.stubs(:value).with('user_ssh_pubkey').returns('jensenb')
       mock_pubkeys_for_user('jensenb')
 
       Facter::UserSshPubkey.add_facts
@@ -73,8 +73,8 @@ describe 'Facter::Util::Fact' do
 
     it 'looks up SSH keys for multiple users from the user_ssh_pubkey fact' do
 
-      Facter.stub(:value).with('user_ssh_pubkey') \
-        .and_return('jensenb,juser,auser')
+      Facter.stubs(:value).with('user_ssh_pubkey') \
+        .returns('jensenb,juser,auser')
       mock_pubkeys_for_user('jensenb')
       mock_pubkeys_for_user('juser')
       mock_pubkeys_for_user('auser')
