@@ -6,8 +6,8 @@ gem 'rspec-core', '~> 2', :require => false
 gem 'rspec-mocks', '~> 2', :require => false
 gem 'rspec-expectations', '~> 2', :require => false
 
-if facterversion = ENV['FACTER_VERSION']
-  gem 'facter', facterversion, :require => false
+if puppetversion = ENV['PUPPET_VERSION']
+  gem 'puppet', puppetversion, :require => false
 else
-  gem 'facter', :require => false
+  gem 'puppet', :require => false
 end

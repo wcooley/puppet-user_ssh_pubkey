@@ -5,8 +5,8 @@ rvm:
     - '2.1'
 script: 'rake spec'
 env:
-    - FACTER_VERSION="~> 1.7"
-    - FACTER_VERSION=">= 2.0"
+    - PUPPET_VERSION="~> 2.7.0"
+    - PUPPET_VERSION="3"
 gemfile: .gemfile
 notifications:
     email: false
