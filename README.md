@@ -4,9 +4,17 @@ Puppet module: user\_ssh\_pubkey
 [![Build
 Status](https://travis-ci.org/wcooley/facter-user_ssh_pubkey.svg?branch=master)](https://travis-ci.org/wcooley/facter-user_ssh_pubkey)
 
-Generate user SSH keys on nodes and collect the public keys and make available
-as facts. These facts can then be collected as exported resources to populate
+Generate user SSH keys on nodes and make public keys available as facts. These
+facts can then be collected as exported resources to populate
 `ssh_authorized_key` resources.
+
+Note that, with this workflow, the agent will have to run twice before the
+keys are available -- facts are collected before resources are created, so the
+first time through the keypair will be generated and the second time the
+public key will be available as a fact.
+
+Note, that, also populating the `user_ssh_pubkey` external fact is (currently)
+unimplemented.
 
 Facts
 -----
