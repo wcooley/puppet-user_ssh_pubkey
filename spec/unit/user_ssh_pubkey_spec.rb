@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'facter'
 require 'ostruct'
 
 def mock_pubkeys_for_user(username)
