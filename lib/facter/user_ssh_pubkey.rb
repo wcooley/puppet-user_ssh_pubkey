@@ -26,7 +26,8 @@ module Facter::UserSshPubkey
 
       if FileTest.exists?(pubpath)
         Facter.debug("Found '#{pubpath}' for user '#{username}'")
-        ktype, key, comment = Facter::Util::FileRead.read(pubpath).chomp.split
+        ktype, key, comment = Facter::Util::FileRead.read(pubpath) \
+          .chomp.split($;, 3)
         fact_base = "#{username}_ssh#{keytype}key"
 
         Facter.add(fact_base) do
