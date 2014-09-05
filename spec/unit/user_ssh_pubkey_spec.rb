@@ -42,6 +42,22 @@ describe 'Facter::Util::Fact' do
         eq('jensenb@zeus')
       expect(Facter.fact(:jensenb_sshrsakey_type).value).to eq('ssh-rsa')
     end
+
+    it 'handles whitespace in comment' do
+      comment = "foo bar baz"
+      mock_pubkeys_for_user('jensenb')
+
+      Facter::Util::FileRead.stubs(:read).with('/u/jensenb/.ssh/id_rsa.pub') \
+        .returns("ssh-rsa jensenb_xxxlongkeyherexxx #{comment}")
+
+      Facter::UserSshPubkey.add_facts_for_user('jensenb')
+
+      expect(Facter.fact(:jensenb_sshrsakey).value).to \
+        eq('jensenb_xxxlongkeyherexxx')
+      expect(Facter.fact(:jensenb_sshrsakey_comment).value).to \
+        eql(comment)
+      expect(Facter.fact(:jensenb_sshrsakey_type).value).to eq('ssh-rsa')
+    end
   end
 
   context 'Facter::UserSshPubkey.add_facts' do
