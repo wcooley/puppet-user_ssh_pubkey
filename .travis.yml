@@ -9,7 +9,7 @@ before_install:
     - echo "user_ssh_pubkey=not_a_user" >> ~/.facter/facts.d/user_ssh_pubkey.txt
 env:
     - PUPPET_VERSION="~> 2.7.0"
-    - PUPPET_VERSION="3"
+    - PUPPET_VERSION="~> 3.6"
 gemfile: .gemfile
 notifications:
     email: false
