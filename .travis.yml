@@ -9,7 +9,8 @@ before_script:
     - facter user_ssh_pubkey
 env:
     - PUPPET_VERSION="~> 2.7.0"
-    - PUPPET_VERSION="~> 3.6"
+    - PUPPET_VERSION="~> 3.6.0"
+    - PUPPET_VERSION="~> 3"
 gemfile: .gemfile
 notifications:
     email: false
