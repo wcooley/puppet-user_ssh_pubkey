@@ -6,6 +6,7 @@ script: 'rake spec'
 before_script:
     - mkdir -p ~/.facter/facts.d
     - echo "user_ssh_pubkey=not_a_user" >> ~/.facter/facts.d/user_ssh_pubkey.txt
+    - facter user_ssh_pubkey
 env:
     - PUPPET_VERSION="~> 2.7.0"
     - PUPPET_VERSION="~> 3.6"
