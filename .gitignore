@@ -2,6 +2,9 @@
 /spec/fixtures/modules
 /spec/fixtures/manifests
 
+# puppet module build output
+/pkg
+
 ## MAC OS
 .DS_Store
 

@@ -1,12 +1,15 @@
-Facter facts: user\_ssh\_pubkey
+Puppet module: user\_ssh\_pubkey
 ================================
 
 [![Build
 Status](https://travis-ci.org/wcooley/facter-user_ssh_pubkey.svg?branch=master)](https://travis-ci.org/wcooley/facter-user_ssh_pubkey)
 
-Collect users' SSH public keys and make available as facts. These facts
-can then be collected as exported resources to populate `ssh_authorized_key`
-resources.
+Generate user SSH keys on nodes and collect the public keys and make available
+as facts. These facts can then be collected as exported resources to populate
+`ssh_authorized_key` resources.
+
+Facts
+-----
 
 Facts with the following formats are created, which correspond with the
 parameters for the `ssh_authorized_key` type:
@@ -22,6 +25,43 @@ example:
     $ cat /etc/facter/facts.d/user_ssh_pubkey.yaml
     ---
     user_ssh_pubkey: jensenb,alice,bob
+
+Type
+----
+
+Type `user_ssh_pubkey` can be used to generate DSA or RSA keys on nodes.
+Parameters are consistent with parameters for `ssh_authorized_key` where
+possible.
+
+Currently this is implemented as a Puppet defined type, which results in an
+`exec` type which runs `ssh-keygen`.
+
+Keys are generated with null passphrases.
+
+### Parameters
+
+- **name**
+    The SSH key comment. Ideally this would be something like
+    "$user/ssh-$type@$::fqdn"; if so, the user and type parameters can be left
+    unspecified.
+
+- **user**
+    **namevar** The user in whose home directory to create the key.
+
+- **target**
+    The absolute filename base to store the private and public keys in. This
+    parameter should generally be avoided, as it breaks the facts.
+
+- **type**
+    The key type: "dsa", "rsa", "ecdsa". Note that semantics of this parameter
+    are different from the `*_type` fact and "type" parameter for
+    `ssh_authorized_key`.
+
+- **user**
+    The user account in which the SSH key should be generated.
+
+- **bits**
+    The number of bits in the key. See `ssh-keygen(1)` for limits.
 
 License
 -------
