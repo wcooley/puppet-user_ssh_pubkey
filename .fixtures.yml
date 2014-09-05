@@ -1,0 +1,5 @@
+fixtures:
+  symlinks:
+    user_ssh_pubkey: "#{source_dir}"
+  forge_modules:
+    stdlib:                 'puppetlabs/stdlib'
