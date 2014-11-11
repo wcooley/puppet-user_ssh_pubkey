@@ -12,7 +12,7 @@
   ],
   "description":
     "Generate user SSH keys on nodes and make public keys available as facts.",
-  "issues_url": "https://github.com/wcooley/facter-user_ssh_pubkey/issues",
+  "issues_url": "https://github.com/wcooley/puppet-user_ssh_pubkey/issues",
   "license": "Apache 2.0",
   "name": "wcooley-user_ssh_pubkey",
   "operatingsystem_support": [
@@ -62,7 +62,7 @@
       ]
     }
   ],
-  "project_page": "https://github.com/wcooley/facter-user_ssh_pubkey",
+  "project_page": "https://github.com/wcooley/puppet-user_ssh_pubkey",
   "requirements": [
     {
       "name": "pe",
@@ -73,7 +73,7 @@
       "version_requirement": ">=2.7.20 <4.0.0"
     }
   ],
-  "source": "git://github.com/wcooley/facter-user_ssh_pubkey",
+  "source": "git://github.com/wcooley/puppet-user_ssh_pubkey",
   "summary":
     "Generate user SSH keys on nodes and make public keys available as facts.",
   "tags": [

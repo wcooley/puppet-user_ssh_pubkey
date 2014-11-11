@@ -2,7 +2,7 @@ Puppet module: user\_ssh\_pubkey
 ================================
 
 [![Build
-Status](https://travis-ci.org/wcooley/facter-user_ssh_pubkey.svg?branch=master)](https://travis-ci.org/wcooley/facter-user_ssh_pubkey)
+Status](https://travis-ci.org/wcooley/puppet-user_ssh_pubkey.svg?branch=master)](https://travis-ci.org/wcooley/puppet-user_ssh_pubkey)
 
 Generate user SSH keys on nodes and make public keys available as facts. These
 facts can then be collected as exported resources to populate
@@ -85,4 +85,4 @@ Support
 -------
 
 Please log tickets and issues at our [Github
-issues](https://github.com/wcooley/facter-user_ssh_pubkey/issues).
+issues](https://github.com/wcooley/puppet-user_ssh_pubkey/issues).

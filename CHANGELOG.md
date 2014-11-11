@@ -4,6 +4,7 @@
 Bugfixes:
 
 * Correct module metadata for dependency versions.
+* Update URLs after renaming Github project.
 
 2014-09-05 - Release 0.2.0
 --------------------------
