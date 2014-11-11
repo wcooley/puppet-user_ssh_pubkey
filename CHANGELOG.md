@@ -1,3 +1,10 @@
+2014-10-11 - Release 0.2.1
+--------------------------
+
+Bugfixes:
+
+* Correct module metadata for dependency versions.
+
 2014-09-05 - Release 0.2.0
 --------------------------
 
