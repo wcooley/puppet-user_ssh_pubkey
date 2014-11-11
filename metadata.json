@@ -2,11 +2,11 @@
   "author": "Wil Cooley <wcooley(at)nakedape.cc>",
   "dependencies": [
     {
-      "name": "puppetlabs-stdlib",
+      "name": "puppetlabs/stdlib",
       "version_requirement": ">= 2.0.0"
     },
     {
-      "name": "wcooley-name_service_lookups",
+      "name": "wcooley/name_service_lookups",
       "version_requirement": ">= 0.1.0"
     }
   ],
