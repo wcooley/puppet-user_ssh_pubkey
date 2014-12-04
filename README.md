@@ -71,6 +71,48 @@ Keys are generated with null passphrases.
 - **bits**
     The number of bits in the key. See `ssh-keygen(1)` for limits.
 
+Example
+-------
+
+For the source or client node, generate an SSH key, collect the fact and
+create an exported `ssh_authorized_key` resource:
+
+```
+user_ssh_pubkey { "repocloner/ssh-rsa@${::fqdn}": }
+
+file { '/etc/facter/facts.d/user_ssh_pubkey.txt':
+  ensure  => present,
+  content => "user_ssh_pubkey=repocloner\n",
+  owner   => 'root',
+  group   => 'root',
+  mode    => '0644',
+}
+
+if $::repocloner_sshrsakey {
+  @@ssh_authorized_key { $::repocloner_sshrsakey_comment:
+    ensure => present,
+    key    => $::repocloner_sshrsakey,
+    user   => 'repocloner',
+    type   => $::repocloner_sshrsakey_type,
+    tag    => [ 'repocloner-ssh-key' ],
+  }
+}
+
+```
+
+If the client node's name is used in the name (comment) of the
+`user_ssh_pubkey`, then exported resources from multiple client
+nodes can be generated.
+
+For the target or server node, collect the exported resource:
+
+```
+Ssh_authorized_key <<| tag == 'repocloner-ssh-key' |>>
+```
+
+One could also use `user` parameter instead of a tag for selecting the
+exported resources instead of a tag.
+
 License
 -------
 
