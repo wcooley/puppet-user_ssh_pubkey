@@ -47,28 +47,19 @@ describe 'user_ssh_pubkey' do
     context 'relative target' do
       let(:title) { 'jensenb/ssh-rsa@animalhouse.edu' }
       let(:params) {{ :target => 'relative/path' }}
-      it do
-        expect { should compile }.to \
-          raise_error(Puppet::Error, /not an absolute path/)
-      end
+      it { should raise_error(Puppet::Error, /not an absolute path/) }
     end
 
     context 'no user param or in title' do
       let!(:title) { '@animalhouse.edu' }
       let!(:params) {{ }}
-      it do
-        expect { should compile }.to \
-          raise_error(Puppet::Error, /unable to determine user/)
-      end
+      it { should raise_error(Puppet::Error, /unable to determine user/) }
     end
 
     context 'no keytype param or in title' do
       let(:title) { 'jensenb@animalhouse.edu' }
       let(:params) {{ }}
-      it do
-        expect { should compile }.to \
-          raise_error(Puppet::Error, /unable to determine type/)
-      end
+      it { should raise_error(Puppet::Error, /unable to determine type/) }
     end
 
   end
