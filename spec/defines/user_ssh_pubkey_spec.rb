@@ -63,5 +63,34 @@ describe 'user_ssh_pubkey' do
     end
 
   end
+end
 
+# Re-defining the `getpwnam` mock seems to only work within a block not
+# contained by a block already having `getpwnam` mocked)
+describe 'user_ssh_pubkey' do
+  context 'user does not exist' do
+    let!(:getpwnam) do
+      MockFunction.new('getpwnam') do |f|
+        f.stub.with(['jensenb']).returns()
+      end
+    end
+
+    context 'no target param given' do
+      let(:title) { 'jensenb/ssh-rsa@animalhouse.edu' }
+      it { should raise_error(Puppet::Error, /Unable to lookup user/) }
+    end
+
+    context 'target param given' do
+      let(:title) { 'jensenb/ssh-rsa@animalhouse.edu' }
+      let(:params) {{ :target => '/home/jensenb/.ssh/id_rsa' }}
+
+      it 'should have an exec resource with expected parameters' do
+        exec = contain_exec("ssh-keygen-#{title}")
+        exec.with_creates('/home/jensenb/.ssh/id_rsa')
+        exec.with_user('jensenb')
+        exec.with_command("ssh-keygen -q  -t rsa -N '' -C '#{title}' -f '/home/jensenb/.ssh/id_rsa'")
+        expect(subject).to(exec)
+      end
+    end
+  end
 end
