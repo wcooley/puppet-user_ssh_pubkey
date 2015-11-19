@@ -17,7 +17,7 @@
 #   parameter should generally be avoided, as it breaks the facts.
 #
 # [*type*]
-#   The key type: "dsa", "rsa", "ecdsa". Note that semantics of this parameter
+#   The key type: "dsa", "rsa", "ecdsa", "ed25519". Note that semantics of this parameter
 #   are different from the `*_type` fact and "type" parameter for
 #   `ssh_authorized_key`.
 #
