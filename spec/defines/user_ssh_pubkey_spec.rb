@@ -69,6 +69,7 @@ end
 # contained by a block already having `getpwnam` mocked)
 describe 'user_ssh_pubkey' do
   context 'user does not exist' do
+    let(:facts) do { :path => '/bin:/usr/bin' } end
     let!(:getpwnam) do
       MockFunction.new('getpwnam') do |f|
         f.stub.with(['jensenb']).returns()
