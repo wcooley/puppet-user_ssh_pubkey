@@ -62,7 +62,7 @@ define user_ssh_pubkey (
     # This is kinda naive, since this is user info on the master, which might
     # not be the same on the node.
     $userhash = getpwnam($real_user)
-    if !$userhash {
+    if empty($userhash)  {
       fail(join(["Unable to lookup user=\"${real_user}\" for",
                  "node=\"${::hostname}\"; set target instead"], ' '))
     }
