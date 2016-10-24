@@ -62,7 +62,7 @@ define user_ssh_pubkey (
     # This is kinda naive, since this is user info on the master, which might
     # not be the same on the node.
     $userhash = getpwnam($real_user)
-    if !$userhash {
+    if empty($userhash)  {
       fail(join(["Unable to lookup user=\"${real_user}\" for",
                  "node=\"${::hostname}\"; set target instead"], ' '))
     }
@@ -74,10 +74,10 @@ define user_ssh_pubkey (
   $f_target = "-f '${real_target}'"
   $b_bits = $bits ? { undef => '', default => "-b ${bits}" }
   $t_type = "-t ${real_type}"
-  $C_comment = "-C '${title}'"
+  $c_comment = "-C '${title}'"
 
   exec { "ssh-keygen-${title}":
-    command => "ssh-keygen -q ${b_bits} ${t_type} -N '' ${C_comment} ${f_target}",
+    command => "ssh-keygen -q ${b_bits} ${t_type} -N '' ${c_comment} ${f_target}",
     creates => $real_target,
     user    => $real_user,
     path    => $::path,
