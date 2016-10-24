@@ -2,6 +2,39 @@ require 'spec_helper'
 require 'rspec-puppet-utils'
 
 describe 'user_ssh_pubkey' do
+  context 'user does not exist' do
+    let(:facts) do { :path => '/bin:/usr/bin' } end
+    let!(:getpwnam) do
+      MockFunction.new('getpwnam') do |f|
+        f.stub.with(['jensenb']).returns()
+      end
+    end
+
+    context 'no target param given' do
+      let(:title) { 'jensenb/ssh-rsa@animalhouse.edu' }
+      it { should raise_error(Puppet::Error, /Unable to lookup user/) }
+    end
+
+    context 'target param given' do
+      let(:title) { 'jensenb/ssh-rsa@animalhouse.edu' }
+      let(:params) {{ :target => '/home/jensenb/.ssh/id_rsa' }}
+
+      it 'should have an exec resource with expected parameters' do
+        exec = contain_exec("ssh-keygen-#{title}")
+        exec.with_creates('/home/jensenb/.ssh/id_rsa')
+        exec.with_user('jensenb')
+        exec.with_command("ssh-keygen -q  -t rsa -N '' -C '#{title}' -f '/home/jensenb/.ssh/id_rsa'")
+        expect(subject).to(exec)
+      end
+    end
+  end
+end
+
+
+#redining getpwnam to return more arguments works apparently:
+#somewhat concerning that there's a relation between
+#test order and results.
+describe 'user_ssh_pubkey' do
 
   let(:facts) {{ :path => '/bin:/usr/bin' }}
 
@@ -47,30 +80,21 @@ describe 'user_ssh_pubkey' do
     context 'relative target' do
       let(:title) { 'jensenb/ssh-rsa@animalhouse.edu' }
       let(:params) {{ :target => 'relative/path' }}
-      it do
-        expect { should compile }.to \
-          raise_error(Puppet::Error, /not an absolute path/)
-      end
+      it { should raise_error(Puppet::Error, /not an absolute path/) }
     end
 
     context 'no user param or in title' do
       let!(:title) { '@animalhouse.edu' }
       let!(:params) {{ }}
-      it do
-        expect { should compile }.to \
-          raise_error(Puppet::Error, /unable to determine user/)
-      end
+      it { should raise_error(Puppet::Error, /unable to determine user/) }
     end
 
     context 'no keytype param or in title' do
       let(:title) { 'jensenb@animalhouse.edu' }
       let(:params) {{ }}
-      it do
-        expect { should compile }.to \
-          raise_error(Puppet::Error, /unable to determine type/)
-      end
+      it { should raise_error(Puppet::Error, /unable to determine type/) }
     end
 
   end
-
 end
+
