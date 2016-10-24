@@ -22,9 +22,9 @@ Facts
 Facts with the following formats are created, which correspond with the
 parameters for the `ssh_authorized_key` type:
 
-* `<username>_ssh(rsa|dsa)key`
-* `<username>_ssh(rsa|dsa)key_comment`
-* `<username>_ssh(rsa|dsa)key_type`
+* `<username>_ssh(rsa|dsa|ecdsa|ed25519)key`
+* `<username>_ssh(rsa|dsa|ecdsa|ed25519)key_comment`
+* `<username>_ssh(rsa|dsa|ecdsa|ed25519)key_type`
 
 The list of users whose public keys are to be collected as facts is configured
 by the `user_ssh_pubkey` fact, which can be set using external facts. For
@@ -61,7 +61,7 @@ Keys are generated with null passphrases.
     parameter should generally be avoided, as it breaks the facts.
 
 - **type**
-    The key type: "dsa", "rsa", "ecdsa". Note that semantics of this parameter
+    The key type: "dsa", "rsa", "ecdsa", "ed25519". Note that semantics of this parameter
     are different from the `*_type` fact and "type" parameter for
     `ssh_authorized_key`.
 

@@ -6,10 +6,14 @@ def mock_pubkeys_for_user(username)
   user_struct = OpenStruct.new(:dir => "/u/#{username}")
   rsa_file = "#{user_struct.dir}/.ssh/id_rsa.pub"
   dsa_file = "#{user_struct.dir}/.ssh/id_dsa.pub"
+  ecdsa_file = "#{user_struct.dir}/.ssh/id_ecdsa.pub"
+  ed25519_file = "#{user_struct.dir}/.ssh/id_ed25519.pub"
 
   Etc.stubs(:getpwnam).with(username).returns(user_struct)
   FileTest.stubs(:exists?).with(rsa_file).returns(true)
   FileTest.stubs(:exists?).with(dsa_file).returns(false)
+  FileTest.stubs(:exists?).with(ecdsa_file).returns(false)
+  FileTest.stubs(:exists?).with(ed25519_file).returns(false)
 
   Facter::Util::FileRead.stubs(:read).with(rsa_file) \
     .returns("ssh-rsa #{username}_xxxlongkeyherexxx #{username}@zeus")

@@ -1,6 +1,6 @@
-# Fact: <username>_ssh(rsa|dsa)key,
-#       <username>_ssh(rsa|dsa)key_comment,
-#       <username>_ssh(rsa|dsa)key_type
+# Fact: <username>_ssh(rsa|dsa|ecdsa|ed25519)key,
+#       <username>_ssh(rsa|dsa|ecdsa|ed25519)key_comment,
+#       <username>_ssh(rsa|dsa|ecdsa|ed25519)key_type
 #
 # Purpose:
 #   Collect users' SSH public keys (presumably for exported resources).
@@ -20,7 +20,7 @@ module Facter::UserSshPubkey
     user = Etc.getpwnam(username)
     sshdir = File.join(user.dir, '.ssh')
 
-    [ 'rsa', 'dsa' ].each do |keytype|
+    [ 'rsa', 'dsa', 'ecdsa', 'ed25519' ].each do |keytype|
       pubfile = "id_#{keytype}.pub"
       pubpath = File.join(sshdir, pubfile)
 
