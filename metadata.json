@@ -58,7 +58,8 @@
       "operatingsystemrelease": [
         "10.04",
         "12.04",
-        "14.04"
+        "14.04",
+        "16.04"
       ]
     }
   ],
@@ -70,7 +71,7 @@
     },
     {
       "name": "puppet",
-      "version_requirement": ">=2.7.20 <4.0.0"
+      "version_requirement": ">=3.0.0 <5.0.0"
     }
   ],
   "source": "git://github.com/wcooley/puppet-user_ssh_pubkey",
@@ -82,5 +83,5 @@
     "fact",
     "facter"
   ],
-  "version": "0.2.2"
+  "version": "1.0.0"
 }
