@@ -11,7 +11,6 @@
 #
 
 require 'etc'
-require 'facter/util/file_read'
 
 module Facter::UserSshPubkey
 
@@ -26,7 +25,7 @@ module Facter::UserSshPubkey
 
       if FileTest.exists?(pubpath)
         Facter.debug("Found '#{pubpath}' for user '#{username}'")
-        ktype, key, comment = Facter::Util::FileRead.read(pubpath) \
+        ktype, key, comment = File.read(pubpath) \
           .chomp.split($;, 3)
         fact_base = "#{username}_ssh#{keytype}key"
 
