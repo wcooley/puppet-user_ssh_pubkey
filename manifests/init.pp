@@ -64,7 +64,7 @@ define user_ssh_pubkey (
     $userhash = getpwnam($real_user)
     if empty($userhash)  {
       fail(join(["Unable to lookup user=\"${real_user}\" for",
-                 "node=\"${::hostname}\"; set target instead"], ' '))
+        "node=\"${::hostname}\"; set target instead"], ' '))
     }
     $real_target = join([$userhash['dir'], '.ssh', "id_${real_type}"], '/')
   }
